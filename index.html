@@ -7,178 +7,176 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1a0f00">
     
-    <!-- Importamos fuentes mágicas de Google Fonts -->
-    <!-- 'Almendra SC' para títulos (parece caligrafía antigua) -->
-    <!-- 'Crimson Text' para el cuerpo (serif clásica y legible) -->
+    <!-- Fuentes mágicas -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Almendra+SC&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
-        /* --- Estilos Globales (La Atmósfera) --- */
+        /* --- Atmósfera del Templo --- */
         body {
-            /* Fondo: Negro profundo con un toque rojizo como sangre seca */
             background-color: #0d0600;
-            /* Textura sutil de ruido para que no sea plano */
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%3C311100' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H2V1z'%3E%3C/path%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23110a00' fill-opacity='0.5' d='M1 3h1v1H1V3zm2-2h1v1H2V1z'%3E%3C/path%3E%3C/svg%3E");
             color: #3e2723;
-            font-family: 'Crimson Text', serif; /* Fuente por defecto */
+            font-family: 'Crimson Text', serif;
             margin: 0;
-            padding: 15px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            box-sizing: border-box;
+            perspective: 1000px; /* Necesario para el efecto 3D de voltear página */
         }
 
-        /* --- El Libro (El Pergamino) --- */
+        /* --- El Libro Abierto (Efecto de Página) --- */
         .libro {
-            /* Fondo simula pergamino viejo con degradado radial */
-            background: radial-gradient(circle, #f4e8d3 0%, #e0c9a6 100%);
+            background: radial-gradient(circle, #f5e9d6 0%, #dfc8a5 100%);
             width: 100%;
-            max-width: 500px;
-            min-height: 90vh;
-            border-radius: 5px;
-            /* Sombra pesada y difusa para dar misterio */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7), inset 0 0 50px rgba(139, 69, 19, 0.3);
-            padding: 30px;
+            max-width: 480px;
+            min-height: 85vh;
+            border-radius: 0 15px 15px 0;
+            /* El borde izquierdo simula el lomo del libro oscuro */
+            border-left: 18px solid #251203; 
+            /* Sombras avanzadas: sombra exterior del libro e interior para dar profundidad al lomo */
+            box-shadow: 8px 8px 25px rgba(0,0,0,0.7), inset 15px 0 20px rgba(0,0,0,0.4);
+            padding: 25px 20px 70px 20px; /* Espacio abajo para los marcadores */
             box-sizing: border-box;
             position: relative;
-            /* Borde simulando cuero viejo o metal oxidado */
-            border: 8px solid #3e2723;
-            border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='7' viewBox='0 0 7 7'%3E%3Cpath fill='%233e2723' d='M0 0h7v7H0z'/%3E%3Cpath fill='%235d4037' d='M1 1h5v5H1z'/%3E%3C/svg%3E") 8 round;
+            overflow: hidden;
         }
 
-        /* --- Títulos --- */
-        h1, h3 {
+        /* --- Animación de Volteo de Página --- */
+        .pagina {
+            display: none;
+            transform-origin: left center;
+            backface-visibility: hidden;
+        }
+
+        .pagina-activa {
+            display: block;
+            animation: voltearPagina 0.5s ease-in-out forwards;
+        }
+
+        @keyframes voltearPagina {
+            0% { transform: rotateY(-30deg); opacity: 0; }
+            100% { transform: rotateY(0deg); opacity: 1; }
+        }
+
+        /* --- Títulos y Separadores --- */
+        h1, h2, h3 {
             font-family: 'Almendra SC', serif;
             text-align: center;
             color: #1a0f00;
             margin-top: 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
+        h1 { font-size: 1.7rem; border-bottom: 2px solid #8d6e63; padding-bottom: 8px; }
+        h1::before, h1::after { content: ' ☾ '; color: #8d6e63; }
+        h2 { font-size: 1.4rem; color: #5d0000; margin-bottom: 20px; }
 
-        h1 {
-            font-size: 1.8rem;
-            padding-bottom: 15px;
-            /* Separador con lunas crescientes */
-            border-bottom: 2px solid #8d6e63;
-            position: relative;
-        }
-        
-        h1::before, h1::after {
-            content: ' ☾ ';
-            color: #8d6e63;
-            font-size: 1.2rem;
-        }
-
-        /* --- Formulario (Herramientas de escritura) --- */
-        input, textarea {
+        /* --- Formulario e Inputs Estilo Tinta --- */
+        input, textarea, select {
             width: 100%;
             margin-bottom: 15px;
             padding: 10px;
-            background: rgba(255, 255, 255, 0.2); /* Semi-transparente */
-            /* Borde inferior como si fuera una línea de tinta */
+            background: rgba(255, 255, 255, 0.25);
             border: none;
             border-bottom: 1px solid #8d6e63;
             font-family: 'Crimson Text', serif;
             font-size: 1.1rem;
             color: #1a0f00;
             box-sizing: border-box;
-            transition: all 0.3s;
         }
-
-        input:focus, textarea:focus {
+        input:focus, textarea:focus, select:focus {
             outline: none;
-            border-bottom: 2px solid #1a0f00;
+            border-bottom: 2px solid #5d0000;
             background: rgba(255, 255, 255, 0.4);
         }
-        
-        /* Estilo para el input de archivo (más discreto) */
-        input[type="file"] {
-            font-size: 0.9rem;
-            border: 1px dashed #8d6e63;
-            background: none;
-            padding: 5px;
-        }
 
-        /* --- El Botón (Sello de Cera) --- */
-        button {
-            /* Color rojo sangre oscuro */
-            background-color: #5d0000;
-            background-image: radial-gradient(circle, #800000 0%, #5d0000 100%);
+        /* --- Botón Sello de Cera --- */
+        .btn-magico {
+            background: radial-gradient(circle, #800000 0%, #5d0000 100%);
             color: #f4e8d3;
             font-family: 'Almendra SC', serif;
             border: 2px solid #3e2723;
-            padding: 12px 20px;
+            padding: 12px;
             cursor: pointer;
             width: 100%;
-            border-radius: 50px; /* Bordes redondeados como un sello */
-            font-size: 1.2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
             text-transform: uppercase;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-            transition: all 0.2s;
-            margin-top: 10px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+            margin-bottom: 15px;
         }
 
-        button:hover {
-            background-color: #800000;
-            transform: scale(1.02);
+        /* --- Gestión de Categorías (Índice) --- */
+        .caja-categoria-nueva {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
         }
-        
-        button:active {
-            transform: scale(0.98);
-            box-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
+        .caja-categoria-nueva input { margin-bottom: 0; }
+        .caja-categoria-nueva button { width: auto; padding: 0 15px; margin-bottom: 0; }
 
-        /* --- Lista de Hechizos (Las Entradas) --- */
-        #lista-hechizos {
-            margin-top: 30px;
+        .lista-cintas {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
+        .cinta-cat {
+            background: #8d6e63;
+            color: #f4e8d3;
+            padding: 10px 15px;
+            border-left: 5px solid #5d0000;
+            font-family: 'Almendra SC', serif;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+        .cinta-cat:hover { background: #795548; }
 
+        /* --- El Hechizo Guardado --- */
         .hechizo {
-            border-top: 1px solid rgba(141, 110, 99, 0.5);
-            margin-top: 25px;
+            border-top: 1px solid rgba(141, 110, 99, 0.4);
+            margin-top: 20px;
             padding-top: 15px;
             position: relative;
         }
-        
-        /* Pequeño adorno entre hechizos */
         .hechizo::before {
-            content: '✦';
+            content: '✦'; position: absolute; top: -12px; left: 50%;
+            transform: translateX(-50%); background-color: #ebdcbfa4;
+            padding: 0 8px; color: #8d6e63; font-size: 0.8rem;
+        }
+        .hechizo h3 { text-align: left; color: #5d0000; margin-bottom: 2px; }
+        .hechizo .tag { font-size: 0.75rem; color: #8d6e63; font-style: italic; display: block; margin-bottom: 10px; }
+        .hechizo p { font-size: 1.1rem; line-height: 1.4; white-space: pre-wrap; font-style: italic; }
+        .hechizo img { max-width: 100%; border-radius: 2px; box-shadow: 3px 3px 8px rgba(0,0,0,0.4); border: 3px solid rgba(62, 39, 35, 0.1); }
+
+        /* --- Cintas Marcadoras (Navegación Inferior) --- */
+        .marcadores {
             position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #e6d3b4; /* Color del pergamino aproximado */
-            padding: 0 10px;
-            color: #8d6e63;
-            font-size: 0.8rem;
+            bottom: 0;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-around;
+            height: 50px;
         }
-
-        .hechizo h3 {
-            color: #5d0000; /* Título del hechizo en rojo oscuro */
-            margin-bottom: 5px;
-            text-align: left;
+        .marcador-btn {
+            background-color: #5d0000;
+            color: #f4e8d3;
+            font-family: 'Almendra SC', serif;
+            border: none;
+            padding: 10px 12px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: 0 0 8px 8px; /* Listones que cuelgan del libro */
+            box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
         }
-
-        .hechizo p {
-            margin-top: 0;
-            font-size: 1.1rem;
-            line-height: 1.5;
-            white-space: pre-wrap; /* Respeta los saltos de línea */
-            font-style: italic; /* Da aspecto de conjuro hablado */
-        }
-
-        .hechizo img {
-            max-width: 100%;
-            border-radius: 2px;
-            margin-top: 10px;
-            box-shadow: 3px 3px 10px rgba(0,0,0,0.5);
-            /* Borde interior sutil a la imagen */
-            border: 4px solid rgba(62, 39, 35, 0.2);
-        }
+        .marcador-btn:hover { transform: translateY(4px); }
+        .marcador-btn.activo { background-color: #8d6e63; color: #1a0f00; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -186,79 +184,175 @@
     <div class="libro">
         <h1>Grimorio Ancestral</h1>
         
-        <input type="text" id="titulo" placeholder="Nombre del Conjuro...">
-        <textarea id="descripcion" rows="5" placeholder="Escribe aquí los ingredientes, la fase lunar y las palabras mágicas..."></textarea>
-        <label style="font-size: 0.8rem; color: #5d4037; display: block; margin-bottom: 5px;">Captura una imagen del ritual (opcional):</label>
-        <input type="file" id="imagen" accept="image/*">
-        <button onclick="guardarHechizo()">Sellar Hechizo</button>
+        <!-- PÁGINA 1: ÍNDICE Y CATEGORÍAS -->
+        <div id="pag-indice" class="pagina pagina-activa">
+            <h2>Índice de Materias</h2>
+            
+            <div class="caja-categoria-nueva">
+                <input type="text" id="nueva-categoria" placeholder="Nueva categoría (ej: Pociones)">
+                <button class="btn-magico" onclick="crearCategoria()">+ Añadir</button>
+            </div>
 
-        <div id="lista-hechizos">
-            <!-- Los hechizos aparecerán aquí -->
+            <div class="lista-cintas" id="lista-categorias-indices">
+                <!-- Aquí se cargan las categorías como cintas de pergamino -->
+            </div>
+        </div>
+
+        <!-- PÁGINA 2: ESCRIBIR CONJURO -->
+        <div id="pag-escribir" class="pagina">
+            <h2>Consagrar Nuevo Hechizo</h2>
+            <input type="text" id="titulo" placeholder="Nombre del Conjuro...">
+            
+            <label style="font-size: 0.8rem; color: #5d4037;">Elige la Materia/Categoría:</label>
+            <select id="select-categoria">
+                <!-- Se rellena automáticamente -->
+            </select>
+
+            <textarea id="descripcion" rows="6" placeholder="Escribe aquí los ingredientes, correspondencias astrales y el cántico..."></textarea>
+            
+            <label style="font-size: 0.8rem; color: #5d4037; display: block; margin-bottom: 5px;">Captura una imagen del ritual (opcional):</label>
+            <input type="file" id="imagen" accept="image/*">
+            
+            <button class="btn-magico" onclick="guardarHechizo()">Sellar Hechizo</button>
+        </div>
+
+        <!-- PÁGINA 3: LECTURA DE HECHIZOS -->
+        <div id="pag-lectura" class="pagina">
+            <h2 id="titulo-lectura-categoria">Todos los Hechizos</h2>
+            <div id="lista-hechizos">
+                <!-- Aquí aparecen los hechizos filtrados -->
+            </div>
+        </div>
+
+        <!-- Cintas de navegación fijas abajo del libro -->
+        <div class="marcadores">
+            <button id="nav-indice" class="marcador-btn activo" onclick="irAPagina('indice')">📜 Índice</button>
+            <button id="nav-escribir" class="marcador-btn" onclick="irAPagina('escribir')">✒️ Escribir</button>
+            <button id="nav-lectura" class="marcador-btn" onclick="irAPagina('lectura')">📖 Leer</button>
         </div>
     </div>
 
     <script>
-        // --- El mismo JavaScript funcional de antes ---
-        
-        // Registrar Service Worker para instalación
+        // Registrar Service Worker para PWA
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
-            .then(() => console.log("Grimorio listo offline."))
-            .catch(err => console.log("Error de energía:", err));
+            navigator.serviceWorker.register('sw.js');
         }
 
-        // Lógica para guardar y mostrar hechizos en IndexedDB (mejor para imágenes)
-        // Usaremos LocalStorage por simplicidad para esta versión, pero ten en cuenta
-        // que tiene límite de espacio (aprox 5MB total).
+        // --- SISTEMA DE CATEGORÍAS ---
+        let categorias = JSON.parse(localStorage.getItem('categorias_grimorio')) || ["Pociones", "Rituales", "Encantamientos"];
+        let categoriaFiltradaActual = "Todas";
 
+        function inicializarCategorias() {
+            localStorage.setItem('categorias_grimorio', JSON.stringify(categorias));
+            
+            // 1. Rellenar el selector al escribir un hechizo
+            const select = document.getElementById('select-categoria');
+            select.innerHTML = '';
+            categorias.forEach(cat => {
+                select.innerHTML += `<option value="${cat}">${cat}</option>`;
+            });
+
+            // 2. Rellenar la lista del Índice (Página 1)
+            const listaIndice = document.getElementById('lista-categorias-indices');
+            listaIndice.innerHTML = `<div class="cinta-cat" onclick="verCategoria('Todas')">🔮 Ver Todo el Grimorio <span>➔</span></div>`;
+            categorias.forEach(cat => {
+                listaIndice.innerHTML += `<div class="cinta-cat" onclick="verCategoria('${cat}')">✨ ${cat} <span>➔</span></div>`;
+            });
+        }
+
+        function crearCategoria() {
+            const input = document.getElementById('nueva-categoria');
+            const nombre = input.value.trim();
+            if (!nombre) return;
+            
+            if (!categorias.includes(nombre)) {
+                categorias.push(nombre);
+                inicializarCategorias();
+                input.value = '';
+            } else {
+                alert("Esa materia ya existe en el grimorio.");
+            }
+        }
+
+        // --- NAVEGACIÓN (EFECTO DE LIBRO) ---
+        function irAPagina(idPagina) {
+            // Quitar clase activa de todas las páginas y botones
+            document.querySelectorAll('.pagina').forEach(p => p.classList.remove('pagina-activa'));
+            document.querySelectorAll('.marcador-btn').forEach(b => b.classList.remove('activo'));
+
+            // Activar la página elegida y su marcador
+            document.getElementById(`pag-${idPagina}`).classList.add('pagina-activa');
+            document.getElementById(`nav-${idPagina}`).classList.add('activo');
+            
+            if (idPagina === 'lectura' && categoriaFiltradaActual === 'Todas') {
+                document.getElementById('titulo-lectura-categoria').innerText = "Todos los Hechizos";
+                mostrarHechizos();
+            }
+        }
+
+        function verCategoria(nombreCategoria) {
+            categoriaFiltradaActual = nombreCategoria;
+            document.getElementById('titulo-lectura-categoria').innerText = nombreCategoria === 'Todas' ? "Todo el Grimorio" : `Materia: ${nombreCategoria}`;
+            mostrarHechizos();
+            irAPagina('lectura'); // Te lleva automáticamente a la página de lectura
+        }
+
+        // --- GUARDAR Y MOSTRAR HECHIZOS ---
         function guardarHechizo() {
             const titulo = document.getElementById('titulo').value;
+            const categoria = document.getElementById('select-categoria').value;
             const descripcion = document.getElementById('descripcion').value;
             const archivoImagen = document.getElementById('imagen').files[0];
 
             if (!titulo || !descripcion) {
-                alert("Maga, necesitas al menos el nombre y las palabras del conjuro.");
+                alert("Maga, debes poner un título y el conjuro.");
                 return;
             }
 
             if (archivoImagen) {
                 const lector = new FileReader();
                 lector.onload = function(e) {
-                    guardarEnMemoria(titulo, descripcion, e.target.result);
+                    guardarEnMemoria(titulo, categoria, descripcion, e.target.result);
                 };
                 lector.readAsDataURL(archivoImagen);
             } else {
-                guardarEnMemoria(titulo, descripcion, null);
+                guardarEnMemoria(titulo, categoria, descripcion, null);
             }
         }
 
-        function guardarEnMemoria(titulo, descripcion, imagenBase64) {
-            let hechizos = JSON.parse(localStorage.getItem('hechizos_ancentrales')) || [];
-            // Añadir el nuevo al principio para que salga primero
-            hechizos.unshift({ titulo, descripcion, imagenBase64, fecha: new Date().toLocaleDateString() });
+        function guardarEnMemoria(titulo, categoria, descripcion, imagenBase64) {
+            let hechizos = JSON.parse(localStorage.getItem('hechizos_v2')) || [];
+            hechizos.unshift({ titulo, categoria, descripcion, imagenBase64, fecha: new Date().toLocaleDateString() });
             
             try {
-                localStorage.setItem('hechizos_ancentrales', JSON.stringify(hechizos));
+                localStorage.setItem('hechizos_v2', JSON.stringify(hechizos));
             } catch (e) {
-                alert("El Grimorio está lleno de imágenes pesadas. No se pudo guardar este hechizo. Intenta sin imagen.");
-                console.error("Error de espacio:", e);
+                alert("Memoria llena. Intenta añadir el hechizo sin foto.");
                 return;
             }
-            
-            // Limpiar formulario y recargar
+
+            // Limpiar formulario e ir a ver el hechizo guardado
             document.getElementById('titulo').value = '';
             document.getElementById('descripcion').value = '';
             document.getElementById('imagen').value = '';
+            categoriaFiltradaActual = categoria;
+            document.getElementById('titulo-lectura-categoria').innerText = `Materia: ${categoria}`;
             mostrarHechizos();
+            irAPagina('lectura');
         }
 
         function mostrarHechizos() {
             const contenedor = document.getElementById('lista-hechizos');
             contenedor.innerHTML = '';
-            let hechizos = JSON.parse(localStorage.getItem('hechizos_ancentrales')) || [];
+            let hechizos = JSON.parse(localStorage.getItem('hechizos_v2')) || [];
+
+            // Filtrar si no es "Todas"
+            if (categoriaFiltradaActual !== "Todas") {
+                hechizos = hechizos.filter(h => h.categoria === categoriaFiltradaActual);
+            }
 
             if (hechizos.length === 0) {
-                contenedor.innerHTML = '<p style="text-align:center; font-style:italic; color: #8d6e63; margin-top: 30px;">El grimorio está en blanco...<br>Añade tu primera magia arriba.</p>';
+                contenedor.innerHTML = '<p style="text-align:center; font-style:italic; color: #8d6e63; margin-top:30px;">Esta sección está en blanco...</p>';
                 return;
             }
 
@@ -267,17 +361,18 @@
                 div.className = 'hechizo';
                 div.innerHTML = `
                     <h3>${h.titulo}</h3>
-                    <span style="font-size:0.7rem; color: #8d6e63; display:block; margin-top:-5px; margin-bottom: 10px;">Consagrado el: ${h.fecha || 'Fecha desconocida'}</span>
+                    <span class="tag">Materia: ${h.categoria} | Consagrado el ${h.fecha}</span>
                     <p>${h.descripcion}</p>
                 `;
                 if (h.imagenBase64) {
-                    div.innerHTML += `<img src="${h.imagenBase64}" alt="Visión del ritual">`;
+                    div.innerHTML += `<img src="${h.imagenBase64}" alt="Ritual">`;
                 }
                 contenedor.appendChild(div);
             });
         }
 
-        // Cargar hechizos al abrir la app
+        // Carga inicial al abrir la app
+        inicializarCategorias();
         mostrarHechizos();
     </script>
 </body>
