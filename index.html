@@ -3,21 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grimorio Ancestral</title>
+    <title>Grimorio de Sombras</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1a0f00">
+    <meta name="theme-color" content="#090212">
     
-    <!-- Fuentes mágicas -->
+    <!-- Fuentes místicas -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Almendra+SC&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Almendra+SC&family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
-        /* --- Atmósfera del Templo --- */
+        /* --- El Vacío Cósmico (Fondo) --- */
         body {
-            background-color: #0d0600;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23110a00' fill-opacity='0.5' d='M1 3h1v1H1V3zm2-2h1v1H2V1z'%3E%3C/path%3E%3C/svg%3E");
-            color: #3e2723;
+            background-color: #05010a;
+            /* Fondo con neblina púrpura y polvo estelar */
+            background-image: 
+                radial-gradient(circle at 50% 20%, #1e0b36 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cg fill='%236a4da4' fill-opacity='0.15'%3E%3Ccircle cx='3' cy='3' r='1'/%3E%3Ccircle cx='13' cy='15' r='1'/%3E%3C/circle%3E%3C/g%3E%3C/svg%3E");
+            color: #ebd6ff;
             font-family: 'Crimson Text', serif;
             margin: 0;
             padding: 10px;
@@ -26,237 +29,290 @@
             align-items: center;
             min-height: 100vh;
             box-sizing: border-box;
-            perspective: 1000px; /* Necesario para el efecto 3D de voltear página */
+            perspective: 1200px;
         }
 
-        /* --- El Libro Abierto (Efecto de Página) --- */
+        /* --- El Libro Oculto (Efecto de Tomo Antiguo) --- */
         .libro {
-            background: radial-gradient(circle, #f5e9d6 0%, #dfc8a5 100%);
+            /* Páginas de pergamino tintado en púrpura oscuro/negro nocturno */
+            background: linear-gradient(135deg, #140b24 0%, #0c0418 100%);
             width: 100%;
             max-width: 480px;
-            min-height: 85vh;
-            border-radius: 0 15px 15px 0;
-            /* El borde izquierdo simula el lomo del libro oscuro */
-            border-left: 18px solid #251203; 
-            /* Sombras avanzadas: sombra exterior del libro e interior para dar profundidad al lomo */
-            box-shadow: 8px 8px 25px rgba(0,0,0,0.7), inset 15px 0 20px rgba(0,0,0,0.4);
-            padding: 25px 20px 70px 20px; /* Espacio abajo para los marcadores */
+            min-height: 88vh;
+            border-radius: 4px 20px 20px 4px;
+            
+            /* Lomo del libro de metal y cuero de bruja */
+            border-left: 22px solid #000000;
+            
+            /* Bordes ornamentados de Oro Envejecido */
+            border-top: 4px solid #c5a059;
+            border-right: 4px solid #c5a059;
+            border-bottom: 4px solid #c5a059;
+            
+            /* Sombras pesadas y resplandor místico */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.9), 
+                        inset 0 0 40px rgba(0, 0, 0, 0.8),
+                        0 0 15px rgba(106, 77, 164, 0.3);
+            
+            padding: 30px 20px 75px 25px;
             box-sizing: border-box;
             position: relative;
-            overflow: hidden;
         }
 
-        /* --- Animación de Volteo de Página --- */
+        /* --- Esquinas de Oro (Detalle No Minimalista) --- */
+        .libro::before {
+            content: '⚜';
+            position: absolute;
+            top: 5px; right: 8px;
+            color: #c5a059;
+            font-size: 1.2rem;
+            text-shadow: 0 0 5px rgba(197, 160, 89, 0.5);
+        }
+
+        /* --- Animación de Páginas --- */
         .pagina {
             display: none;
             transform-origin: left center;
-            backface-visibility: hidden;
         }
 
         .pagina-activa {
             display: block;
-            animation: voltearPagina 0.5s ease-in-out forwards;
+            animation: pasarPaginaMágica 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
-        @keyframes voltearPagina {
-            0% { transform: rotateY(-30deg); opacity: 0; }
-            100% { transform: rotateY(0deg); opacity: 1; }
+        @keyframes pasarPaginaMágica {
+            0% { transform: rotateY(-45deg); opacity: 0; filter: brightness(0.3); }
+            100% { transform: rotateY(0deg); opacity: 1; filter: brightness(1); }
         }
 
-        /* --- Títulos y Separadores --- */
+        /* --- Títulos Góticos --- */
         h1, h2, h3 {
-            font-family: 'Almendra SC', serif;
+            font-family: 'Cinzel Decorative', serif;
             text-align: center;
-            color: #1a0f00;
+            color: #c5a059; /* Oro */
+            text-shadow: 0 0 8px rgba(197, 160, 89, 0.4), 2px 2px 2px #000;
             margin-top: 0;
         }
-        h1 { font-size: 1.7rem; border-bottom: 2px solid #8d6e63; padding-bottom: 8px; }
-        h1::before, h1::after { content: ' ☾ '; color: #8d6e63; }
-        h2 { font-size: 1.4rem; color: #5d0000; margin-bottom: 20px; }
+        h1 { 
+            font-size: 1.4rem; 
+            border-bottom: 2px double #c5a059; 
+            padding-bottom: 12px;
+            letter-spacing: 2px;
+        }
+        h1::before { content: '👁️‍🗨️ '; }
+        h1::after { content: ' 👁️‍🗨️'; }
+        h2 { font-size: 1.1rem; color: #a076ff; margin-bottom: 25px; font-family: 'Almendra SC', serif; letter-spacing: 1px;}
 
-        /* --- Formulario e Inputs Estilo Tinta --- */
+        /* --- Formularios (Invocaciones en Tinta Brillante) --- */
         input, textarea, select {
             width: 100%;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.25);
-            border: none;
-            border-bottom: 1px solid #8d6e63;
+            margin-bottom: 18px;
+            padding: 12px;
+            background: #090312;
+            border: 1px solid #4a2e80;
+            border-radius: 4px;
             font-family: 'Crimson Text', serif;
             font-size: 1.1rem;
-            color: #1a0f00;
+            color: #ebd6ff;
             box-sizing: border-box;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
         }
         input:focus, textarea:focus, select:focus {
             outline: none;
-            border-bottom: 2px solid #5d0000;
-            background: rgba(255, 255, 255, 0.4);
+            border-color: #c5a059;
+            box-shadow: 0 0 10px rgba(197, 160, 89, 0.3), inset 0 2px 4px rgba(0,0,0,0.6);
         }
 
-        /* --- Botón Sello de Cera --- */
+        /* --- Botón: El Gran Sello --- */
         .btn-magico {
-            background: radial-gradient(circle, #800000 0%, #5d0000 100%);
-            color: #f4e8d3;
+            background: linear-gradient(135deg, #3d1c75 0%, #1e0642 100%);
+            color: #c5a059;
             font-family: 'Almendra SC', serif;
-            border: 2px solid #3e2723;
-            padding: 12px;
+            border: 2px solid #c5a059;
+            padding: 14px;
             cursor: pointer;
             width: 100%;
-            border-radius: 50px;
-            font-size: 1.1rem;
+            border-radius: 4px;
+            font-size: 1.2rem;
             text-transform: uppercase;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
-            margin-bottom: 15px;
+            letter-spacing: 2px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 2px #000;
+            transition: all 0.3s;
+        }
+        .btn-magico:hover {
+            filter: brightness(1.3);
+            box-shadow: 0 0 15px rgba(160, 118, 255, 0.4);
         }
 
-        /* --- Gestión de Categorías (Índice) --- */
-        .caja-categoria-nueva {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 20px;
-        }
+        /* --- Elementos del Índice (Pergaminos Oscuros) --- */
+        .caja-categoria-nueva { display: flex; gap: 8px; margin-bottom: 25px; }
         .caja-categoria-nueva input { margin-bottom: 0; }
-        .caja-categoria-nueva button { width: auto; padding: 0 15px; margin-bottom: 0; }
+        .caja-categoria-nueva button { width: auto; padding: 0 20px; margin-bottom: 0; }
 
-        .lista-cintas {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        .lista-cintas { display: flex; flex-direction: column; gap: 12px; }
+        
         .cinta-cat {
-            background: #8d6e63;
-            color: #f4e8d3;
-            padding: 10px 15px;
-            border-left: 5px solid #5d0000;
+            background: #110620;
+            color: #ebd6ff;
+            padding: 12px 18px;
+            border: 1px solid #4a2e80;
+            border-left: 6px solid #c5a059;
             font-family: 'Almendra SC', serif;
+            font-size: 1.1rem;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 3px 3px 8px rgba(0,0,0,0.4);
+            border-radius: 0 4px 4px 0;
         }
-        .cinta-cat:hover { background: #795548; }
+        .cinta-cat:hover {
+            background: #1c0d33;
+            border-color: #c5a059;
+            color: #ffe6b3;
+        }
 
-        /* --- El Hechizo Guardado --- */
+        /* --- El Hechizo Revelado --- */
         .hechizo {
-            border-top: 1px solid rgba(141, 110, 99, 0.4);
-            margin-top: 20px;
-            padding-top: 15px;
-            position: relative;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #311c54;
+            border-radius: 8px;
+            margin-top: 25px;
+            padding: 20px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
         }
-        .hechizo::before {
-            content: '✦'; position: absolute; top: -12px; left: 50%;
-            transform: translateX(-50%); background-color: #ebdcbfa4;
-            padding: 0 8px; color: #8d6e63; font-size: 0.8rem;
+        .hechizo h3 { 
+            text-align: left; 
+            color: #c5a059; 
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            border-bottom: 1px dashed #4a2e80;
+            padding-bottom: 5px;
         }
-        .hechizo h3 { text-align: left; color: #5d0000; margin-bottom: 2px; }
-        .hechizo .tag { font-size: 0.75rem; color: #8d6e63; font-style: italic; display: block; margin-bottom: 10px; }
-        .hechizo p { font-size: 1.1rem; line-height: 1.4; white-space: pre-wrap; font-style: italic; }
-        .hechizo img { max-width: 100%; border-radius: 2px; box-shadow: 3px 3px 8px rgba(0,0,0,0.4); border: 3px solid rgba(62, 39, 35, 0.1); }
+        .hechizo .tag { 
+            font-size: 0.8rem; 
+            color: #a076ff; 
+            display: block; 
+            margin-bottom: 15px; 
+            font-family: 'Almendra SC', serif;
+        }
+        .hechizo p { 
+            font-size: 1.15rem; 
+            line-height: 1.6; 
+            color: #dec9f0;
+            white-space: pre-wrap; 
+            font-style: italic;
+            text-shadow: 1px 1px 1px #000;
+        }
+        .hechizo img { 
+            max-width: 100%; 
+            border-radius: 4px; 
+            margin-top: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.8); 
+            border: 2px solid #c5a059; 
+        }
 
-        /* --- Cintas Marcadoras (Navegación Inferior) --- */
+        /* --- Listones del Destino (Navegación Inferior) --- */
         .marcadores {
             position: absolute;
-            bottom: 0;
-            left: 20px;
-            right: 20px;
+            bottom: 0; left: 15px; right: 15px;
             display: flex;
             justify-content: space-around;
-            height: 50px;
+            height: 55px;
         }
         .marcador-btn {
-            background-color: #5d0000;
-            color: #f4e8d3;
+            background: #1a0830;
+            color: #a076ff;
             font-family: 'Almendra SC', serif;
-            border: none;
-            padding: 10px 12px;
-            font-size: 0.9rem;
+            border: 1px solid #4a2e80;
+            border-top: none;
+            padding: 10px 15px;
+            font-size: 0.95rem;
             cursor: pointer;
-            border-radius: 0 0 8px 8px; /* Listones que cuelgan del libro */
-            box-shadow: 0 3px 5px rgba(0,0,0,0.3);
-            transition: transform 0.2s;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.6);
+            transition: all 0.3s;
+            letter-spacing: 1px;
         }
-        .marcador-btn:hover { transform: translateY(4px); }
-        .marcador-btn.activo { background-color: #8d6e63; color: #1a0f00; font-weight: bold; }
+        .marcador-btn:hover { transform: translateY(5px); color: #ebd6ff; }
+        .marcador-btn.activo { 
+            background: #c5a059; 
+            color: #0d0614; 
+            font-weight: bold; 
+            border-color: #c5a059;
+            text-shadow: none;
+            transform: translateY(2px);
+        }
     </style>
 </head>
 <body>
 
     <div class="libro">
-        <h1>Grimorio Ancestral</h1>
+        <h1>Grimorio de Sombras</h1>
         
         <!-- PÁGINA 1: ÍNDICE Y CATEGORÍAS -->
         <div id="pag-indice" class="pagina pagina-activa">
-            <h2>Índice de Materias</h2>
+            <h2>Index Materia</h2>
             
             <div class="caja-categoria-nueva">
-                <input type="text" id="nueva-categoria" placeholder="Nueva categoría (ej: Pociones)">
-                <button class="btn-magico" onclick="crearCategoria()">+ Añadir</button>
+                <input type="text" id="nueva-categoria" placeholder="Invocar Nueva Sección...">
+                <button class="btn-magico" onclick="crearCategoria()">+</button>
             </div>
 
             <div class="lista-cintas" id="lista-categorias-indices">
-                <!-- Aquí se cargan las categorías como cintas de pergamino -->
+                <!-- Se carga dinámicamente -->
             </div>
         </div>
 
         <!-- PÁGINA 2: ESCRIBIR CONJURO -->
         <div id="pag-escribir" class="pagina">
-            <h2>Consagrar Nuevo Hechizo</h2>
-            <input type="text" id="titulo" placeholder="Nombre del Conjuro...">
+            <h2>Plasmado de Conjuros</h2>
+            <input type="text" id="titulo" placeholder="Nombre del Ritual...">
             
-            <label style="font-size: 0.8rem; color: #5d4037;">Elige la Materia/Categoría:</label>
-            <select id="select-categoria">
-                <!-- Se rellena automáticamente -->
-            </select>
+            <select id="select-categoria"></select>
 
-            <textarea id="descripcion" rows="6" placeholder="Escribe aquí los ingredientes, correspondencias astrales y el cántico..."></textarea>
+            <textarea id="descripcion" rows="6" placeholder="Escribe los ingredientes oscuros, encantamientos y el propósito secreto..."></textarea>
             
-            <label style="font-size: 0.8rem; color: #5d4037; display: block; margin-bottom: 5px;">Captura una imagen del ritual (opcional):</label>
+            <label style="font-size: 0.85rem; color: #a076ff; display: block; margin-bottom: 8px;">Manifestación Visual (Imagen):</label>
             <input type="file" id="imagen" accept="image/*">
             
-            <button class="btn-magico" onclick="guardarHechizo()">Sellar Hechizo</button>
+            <button class="btn-magico" onclick="guardarHechizo()">Sellar en las Sombras</button>
         </div>
 
         <!-- PÁGINA 3: LECTURA DE HECHIZOS -->
         <div id="pag-lectura" class="pagina">
-            <h2 id="titulo-lectura-categoria">Todos los Hechizos</h2>
+            <h2 id="titulo-lectura-categoria">Hechizos Revelados</h2>
             <div id="lista-hechizos">
-                <!-- Aquí aparecen los hechizos filtrados -->
+                <!-- Hechizos filtrados -->
             </div>
         </div>
 
-        <!-- Cintas de navegación fijas abajo del libro -->
+        <!-- Cintas Marcadoras -->
         <div class="marcadores">
-            <button id="nav-indice" class="marcador-btn activo" onclick="irAPagina('indice')">📜 Índice</button>
-            <button id="nav-escribir" class="marcador-btn" onclick="irAPagina('escribir')">✒️ Escribir</button>
+            <button id="nav-indice" class="marcador-btn activo" onclick="irAPagina('indice')">🔮 Índice</button>
+            <button id="nav-escribir" class="marcador-btn" onclick="irAPagina('escribir')">✒️ Conjurar</button>
             <button id="nav-lectura" class="marcador-btn" onclick="irAPagina('lectura')">📖 Leer</button>
         </div>
     </div>
 
     <script>
-        // Registrar Service Worker para PWA
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
-        }
-
-        // --- SISTEMA DE CATEGORÍAS ---
-        let categorias = JSON.parse(localStorage.getItem('categorias_grimorio')) || ["Pociones", "Rituales", "Encantamientos"];
+        // --- El mismo JavaScript robusto y funcional anterior ---
+        let categorias = JSON.parse(localStorage.getItem('categorias_grimorio_v3')) || ["Pociones", "Rituales Lunares", "Maldiciones"];
         let categoriaFiltradaActual = "Todas";
 
         function inicializarCategorias() {
-            localStorage.setItem('categorias_grimorio', JSON.stringify(categorias));
+            localStorage.setItem('categorias_grimorio_v3', JSON.stringify(categorias));
             
-            // 1. Rellenar el selector al escribir un hechizo
             const select = document.getElementById('select-categoria');
             select.innerHTML = '';
             categorias.forEach(cat => {
                 select.innerHTML += `<option value="${cat}">${cat}</option>`;
             });
 
-            // 2. Rellenar la lista del Índice (Página 1)
             const listaIndice = document.getElementById('lista-categorias-indices');
-            listaIndice.innerHTML = `<div class="cinta-cat" onclick="verCategoria('Todas')">🔮 Ver Todo el Grimorio <span>➔</span></div>`;
+            listaIndice.innerHTML = `<div class="cinta-cat" onclick="verCategoria('Todas')">💀 Revelar Todo el Tomo <span>➔</span></div>`;
             categorias.forEach(cat => {
-                listaIndice.innerHTML += `<div class="cinta-cat" onclick="verCategoria('${cat}')">✨ ${cat} <span>➔</span></div>`;
+                listaIndice.innerHTML += `<div class="cinta-cat" onclick="verCategoria('${cat}')">🔮 ${cat} <span>➔</span></div>`;
             });
         }
 
@@ -269,35 +325,24 @@
                 categorias.push(nombre);
                 inicializarCategorias();
                 input.value = '';
-            } else {
-                alert("Esa materia ya existe en el grimorio.");
             }
         }
 
-        // --- NAVEGACIÓN (EFECTO DE LIBRO) ---
         function irAPagina(idPagina) {
-            // Quitar clase activa de todas las páginas y botones
             document.querySelectorAll('.pagina').forEach(p => p.classList.remove('pagina-activa'));
             document.querySelectorAll('.marcador-btn').forEach(b => b.classList.remove('activo'));
 
-            // Activar la página elegida y su marcador
             document.getElementById(`pag-${idPagina}`).classList.add('pagina-activa');
             document.getElementById(`nav-${idPagina}`).classList.add('activo');
-            
-            if (idPagina === 'lectura' && categoriaFiltradaActual === 'Todas') {
-                document.getElementById('titulo-lectura-categoria').innerText = "Todos los Hechizos";
-                mostrarHechizos();
-            }
         }
 
         function verCategoria(nombreCategoria) {
             categoriaFiltradaActual = nombreCategoria;
-            document.getElementById('titulo-lectura-categoria').innerText = nombreCategoria === 'Todas' ? "Todo el Grimorio" : `Materia: ${nombreCategoria}`;
+            document.getElementById('titulo-lectura-categoria').innerText = nombreCategoria === 'Todas' ? "Todo el Tomo" : `Materia: ${nombreCategoria}`;
             mostrarHechizos();
-            irAPagina('lectura'); // Te lleva automáticamente a la página de lectura
+            irAPagina('lectura');
         }
 
-        // --- GUARDAR Y MOSTRAR HECHIZOS ---
         function guardarHechizo() {
             const titulo = document.getElementById('titulo').value;
             const categoria = document.getElementById('select-categoria').value;
@@ -305,7 +350,7 @@
             const archivoImagen = document.getElementById('imagen').files[0];
 
             if (!titulo || !descripcion) {
-                alert("Maga, debes poner un título y el conjuro.");
+                alert("El ritual requiere palabras y nombre.");
                 return;
             }
 
@@ -321,22 +366,20 @@
         }
 
         function guardarEnMemoria(titulo, categoria, descripcion, imagenBase64) {
-            let hechizos = JSON.parse(localStorage.getItem('hechizos_v2')) || [];
+            let hechizos = JSON.parse(localStorage.getItem('hechizos_v3')) || [];
             hechizos.unshift({ titulo, categoria, descripcion, imagenBase64, fecha: new Date().toLocaleDateString() });
             
             try {
-                localStorage.setItem('hechizos_v2', JSON.stringify(hechizos));
+                localStorage.setItem('hechizos_v3', JSON.stringify(hechizos));
             } catch (e) {
-                alert("Memoria llena. Intenta añadir el hechizo sin foto.");
+                alert("La imagen consume demasiada energía mágica (memoria llena).");
                 return;
             }
 
-            // Limpiar formulario e ir a ver el hechizo guardado
             document.getElementById('titulo').value = '';
             document.getElementById('descripcion').value = '';
             document.getElementById('imagen').value = '';
             categoriaFiltradaActual = categoria;
-            document.getElementById('titulo-lectura-categoria').innerText = `Materia: ${categoria}`;
             mostrarHechizos();
             irAPagina('lectura');
         }
@@ -344,15 +387,14 @@
         function mostrarHechizos() {
             const contenedor = document.getElementById('lista-hechizos');
             contenedor.innerHTML = '';
-            let hechizos = JSON.parse(localStorage.getItem('hechizos_v2')) || [];
+            let hechizos = JSON.parse(localStorage.getItem('hechizos_v3')) || [];
 
-            // Filtrar si no es "Todas"
             if (categoriaFiltradaActual !== "Todas") {
                 hechizos = hechizos.filter(h => h.categoria === categoriaFiltradaActual);
             }
 
             if (hechizos.length === 0) {
-                contenedor.innerHTML = '<p style="text-align:center; font-style:italic; color: #8d6e63; margin-top:30px;">Esta sección está en blanco...</p>';
+                contenedor.innerHTML = '<p style="text-align:center; font-style:italic; color: #a076ff; margin-top:30px;">Estas páginas están mudas...</p>';
                 return;
             }
 
@@ -371,7 +413,6 @@
             });
         }
 
-        // Carga inicial al abrir la app
         inicializarCategorias();
         mostrarHechizos();
     </script>
