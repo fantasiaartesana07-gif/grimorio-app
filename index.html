@@ -3,89 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Grimorio</title>
+    <title>Grimorio Ancestral</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4a3525">
+    <meta name="theme-color" content="#1a0f00">
+    
+    <!-- Importamos fuentes mágicas de Google Fonts -->
+    <!-- 'Almendra SC' para títulos (parece caligrafía antigua) -->
+    <!-- 'Crimson Text' para el cuerpo (serif clásica y legible) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Almendra+SC&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
     <style>
+        /* --- Estilos Globales (La Atmósfera) --- */
         body {
-            background-color: #2c1e16;
+            /* Fondo: Negro profundo con un toque rojizo como sangre seca */
+            background-color: #0d0600;
+            /* Textura sutil de ruido para que no sea plano */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%3C311100' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H2V1z'%3E%3C/path%3E%3C/svg%3E");
             color: #3e2723;
-            font-family: 'Georgia', serif;
+            font-family: 'Crimson Text', serif; /* Fuente por defecto */
             margin: 0;
-            padding: 10px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
         }
+
+        /* --- El Libro (El Pergamino) --- */
         .libro {
-            background-color: #f4e8d3;
+            /* Fondo simula pergamino viejo con degradado radial */
+            background: radial-gradient(circle, #f4e8d3 0%, #e0c9a6 100%);
             width: 100%;
             max-width: 500px;
             min-height: 90vh;
-            border-radius: 5px 15px 15px 5px;
-            box-shadow: inset 5px 0 10px rgba(0,0,0,0.1), 3px 3px 10px rgba(0,0,0,0.5);
-            padding: 20px;
+            border-radius: 5px;
+            /* Sombra pesada y difusa para dar misterio */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7), inset 0 0 50px rgba(139, 69, 19, 0.3);
+            padding: 30px;
             box-sizing: border-box;
+            position: relative;
+            /* Borde simulando cuero viejo o metal oxidado */
+            border: 8px solid #3e2723;
+            border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='7' viewBox='0 0 7 7'%3E%3Cpath fill='%233e2723' d='M0 0h7v7H0z'/%3E%3Cpath fill='%235d4037' d='M1 1h5v5H1z'/%3E%3C/svg%3E") 8 round;
         }
-        h1 { text-align: center; border-bottom: 2px solid #8d6e63; padding-bottom: 10px; }
+
+        /* --- Títulos --- */
+        h1, h3 {
+            font-family: 'Almendra SC', serif;
+            text-align: center;
+            color: #1a0f00;
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            padding-bottom: 15px;
+            /* Separador con lunas crescientes */
+            border-bottom: 2px solid #8d6e63;
+            position: relative;
+        }
+        
+        h1::before, h1::after {
+            content: ' ☾ ';
+            color: #8d6e63;
+            font-size: 1.2rem;
+        }
+
+        /* --- Formulario (Herramientas de escritura) --- */
         input, textarea {
             width: 100%;
-            margin-bottom: 10px;
-            padding: 8px;
-            background: transparent;
-            border: 1px dashed #8d6e63;
-            font-family: inherit;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #8d6e63;
-            color: #f4e8d3;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2); /* Semi-transparente */
+            /* Borde inferior como si fuera una línea de tinta */
             border: none;
-            padding: 10px 20px;
+            border-bottom: 1px solid #8d6e63;
+            font-family: 'Crimson Text', serif;
+            font-size: 1.1rem;
+            color: #1a0f00;
+            box-sizing: border-box;
+            transition: all 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-bottom: 2px solid #1a0f00;
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Estilo para el input de archivo (más discreto) */
+        input[type="file"] {
+            font-size: 0.9rem;
+            border: 1px dashed #8d6e63;
+            background: none;
+            padding: 5px;
+        }
+
+        /* --- El Botón (Sello de Cera) --- */
+        button {
+            /* Color rojo sangre oscuro */
+            background-color: #5d0000;
+            background-image: radial-gradient(circle, #800000 0%, #5d0000 100%);
+            color: #f4e8d3;
+            font-family: 'Almendra SC', serif;
+            border: 2px solid #3e2723;
+            padding: 12px 20px;
             cursor: pointer;
             width: 100%;
-            border-radius: 5px;
-            font-size: 16px;
+            border-radius: 50px; /* Bordes redondeados como un sello */
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            transition: all 0.2s;
+            margin-top: 10px;
         }
+
+        button:hover {
+            background-color: #800000;
+            transform: scale(1.02);
+        }
+        
+        button:active {
+            transform: scale(0.98);
+            box-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* --- Lista de Hechizos (Las Entradas) --- */
+        #lista-hechizos {
+            margin-top: 30px;
+        }
+
         .hechizo {
-            border-top: 1px solid #8d6e63;
-            margin-top: 20px;
-            padding-top: 10px;
+            border-top: 1px solid rgba(141, 110, 99, 0.5);
+            margin-top: 25px;
+            padding-top: 15px;
+            position: relative;
         }
+        
+        /* Pequeño adorno entre hechizos */
+        .hechizo::before {
+            content: '✦';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #e6d3b4; /* Color del pergamino aproximado */
+            padding: 0 10px;
+            color: #8d6e63;
+            font-size: 0.8rem;
+        }
+
+        .hechizo h3 {
+            color: #5d0000; /* Título del hechizo en rojo oscuro */
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        .hechizo p {
+            margin-top: 0;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            white-space: pre-wrap; /* Respeta los saltos de línea */
+            font-style: italic; /* Da aspecto de conjuro hablado */
+        }
+
         .hechizo img {
             max-width: 100%;
-            border-radius: 5px;
+            border-radius: 2px;
             margin-top: 10px;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.5);
+            /* Borde interior sutil a la imagen */
+            border: 4px solid rgba(62, 39, 35, 0.2);
         }
     </style>
 </head>
 <body>
 
     <div class="libro">
-        <h1>Mi Grimorio</h1>
+        <h1>Grimorio Ancestral</h1>
         
-        <input type="text" id="titulo" placeholder="Nombre del Hechizo">
-        <textarea id="descripcion" rows="4" placeholder="Ingredientes y conjuro..."></textarea>
+        <input type="text" id="titulo" placeholder="Nombre del Conjuro...">
+        <textarea id="descripcion" rows="5" placeholder="Escribe aquí los ingredientes, la fase lunar y las palabras mágicas..."></textarea>
+        <label style="font-size: 0.8rem; color: #5d4037; display: block; margin-bottom: 5px;">Captura una imagen del ritual (opcional):</label>
         <input type="file" id="imagen" accept="image/*">
-        <button onclick="guardarHechizo()">Añadir al Grimorio</button>
+        <button onclick="guardarHechizo()">Sellar Hechizo</button>
 
-        <div id="lista-hechizos"></div>
+        <div id="lista-hechizos">
+            <!-- Los hechizos aparecerán aquí -->
+        </div>
     </div>
 
     <script>
+        // --- El mismo JavaScript funcional de antes ---
+        
         // Registrar Service Worker para instalación
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
+            navigator.serviceWorker.register('sw.js')
+            .then(() => console.log("Grimorio listo offline."))
+            .catch(err => console.log("Error de energía:", err));
         }
 
-        // Lógica para guardar y mostrar hechizos
+        // Lógica para guardar y mostrar hechizos en IndexedDB (mejor para imágenes)
+        // Usaremos LocalStorage por simplicidad para esta versión, pero ten en cuenta
+        // que tiene límite de espacio (aprox 5MB total).
+
         function guardarHechizo() {
             const titulo = document.getElementById('titulo').value;
             const descripcion = document.getElementById('descripcion').value;
             const archivoImagen = document.getElementById('imagen').files[0];
 
             if (!titulo || !descripcion) {
-                alert("Necesitas un título y una descripción.");
+                alert("Maga, necesitas al menos el nombre y las palabras del conjuro.");
                 return;
             }
 
@@ -101,9 +233,17 @@
         }
 
         function guardarEnMemoria(titulo, descripcion, imagenBase64) {
-            let hechizos = JSON.parse(localStorage.getItem('hechizos')) || [];
-            hechizos.push({ titulo, descripcion, imagenBase64 });
-            localStorage.setItem('hechizos', JSON.stringify(hechizos));
+            let hechizos = JSON.parse(localStorage.getItem('hechizos_ancentrales')) || [];
+            // Añadir el nuevo al principio para que salga primero
+            hechizos.unshift({ titulo, descripcion, imagenBase64, fecha: new Date().toLocaleDateString() });
+            
+            try {
+                localStorage.setItem('hechizos_ancentrales', JSON.stringify(hechizos));
+            } catch (e) {
+                alert("El Grimorio está lleno de imágenes pesadas. No se pudo guardar este hechizo. Intenta sin imagen.");
+                console.error("Error de espacio:", e);
+                return;
+            }
             
             // Limpiar formulario y recargar
             document.getElementById('titulo').value = '';
@@ -115,14 +255,23 @@
         function mostrarHechizos() {
             const contenedor = document.getElementById('lista-hechizos');
             contenedor.innerHTML = '';
-            let hechizos = JSON.parse(localStorage.getItem('hechizos')) || [];
+            let hechizos = JSON.parse(localStorage.getItem('hechizos_ancentrales')) || [];
+
+            if (hechizos.length === 0) {
+                contenedor.innerHTML = '<p style="text-align:center; font-style:italic; color: #8d6e63; margin-top: 30px;">El grimorio está en blanco...<br>Añade tu primera magia arriba.</p>';
+                return;
+            }
 
             hechizos.forEach(h => {
                 let div = document.createElement('div');
                 div.className = 'hechizo';
-                div.innerHTML = `<h3>${h.titulo}</h3><p>${h.descripcion}</p>`;
+                div.innerHTML = `
+                    <h3>${h.titulo}</h3>
+                    <span style="font-size:0.7rem; color: #8d6e63; display:block; margin-top:-5px; margin-bottom: 10px;">Consagrado el: ${h.fecha || 'Fecha desconocida'}</span>
+                    <p>${h.descripcion}</p>
+                `;
                 if (h.imagenBase64) {
-                    div.innerHTML += `<img src="${h.imagenBase64}" alt="Imagen del hechizo">`;
+                    div.innerHTML += `<img src="${h.imagenBase64}" alt="Visión del ritual">`;
                 }
                 contenedor.appendChild(div);
             });
@@ -133,4 +282,3 @@
     </script>
 </body>
 </html>
-
