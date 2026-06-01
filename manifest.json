@@ -1,17 +1,17 @@
 {
-  "name": "Mi Grimorio Personal",
+  "name": "Grimorio Ancestral",
   "short_name": "Grimorio",
-  "description": "Libro de hechizos digital",
+  "description": "Libro de hechizos y rituales antiguos",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#2c1e16",
-  "theme_color": "#4a3525",
+  "background_color": "#0d0600",
+  "theme_color": "#1a0f00",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/3075/3075908.png",
+      "src": "https://img.icons8.com/fluency-systems-filled/512/crescent-moon.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
-
