@@ -10,7 +10,6 @@
     <!-- Fuentes místicas y de cripta -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Agregamos 'Creepster' para el efecto cripta -->
     <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Almendra+SC&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
@@ -82,7 +81,7 @@
             10% { transform: translateX(-4px) scale(1.1); }
             30% { transform: translateX(4px) scale(1.1); }
             45% { transform: translateX(0) scale(1); }
-            95% { transform: scaleY(0.1); /* Parpadeo rápido */ }
+            95% { transform: scaleY(0.1); }
             98% { transform: scaleY(1); }
         }
 
@@ -93,7 +92,6 @@
 
         /* --- Títulos --- */
         h1 { 
-            /* Letra de cripta aplicada aquí */
             font-family: 'Creepster', cursive; 
             font-size: 2.2rem; 
             border-bottom: 2px double #c5a059; 
@@ -176,6 +174,7 @@
             cursor: pointer;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             box-shadow: 3px 3px 8px rgba(0,0,0,0.4);
             border-radius: 0 4px 4px 0;
         }
@@ -183,6 +182,22 @@
             background: #1c0d33;
             border-color: #c5a059;
             color: #ffe6b3;
+        }
+
+        /* Zona de botones dentro de la cinta */
+        .controles-cinta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-editar-cat {
+            font-size: 1rem;
+            padding: 2px;
+            transition: transform 0.2s;
+        }
+        .btn-editar-cat:hover {
+            transform: scale(1.3);
         }
 
         /* --- El Hechizo Revelado --- */
@@ -225,7 +240,7 @@
             border: 2px solid #c5a059; 
         }
 
-        /* --- Listones Inferiores (Nuevos Emojis) --- */
+        /* --- Listones Inferiores --- */
         .marcadores {
             position: absolute;
             bottom: 0; left: 15px; right: 15px;
@@ -261,12 +276,10 @@
 <body>
 
     <div class="libro">
-        <!-- Ojos con la clase .ojo-vivo para la animación -->
         <h1><span class="ojo-vivo">👁️‍🗨️</span> Grimorio de Sombras <span class="ojo-vivo">👁️‍🗨️</span></h1>
         
-        <!-- PÁGINA 1: ÍNDICE Y CATEGORÍAS -->
+        <!-- PÁGINA 1: SECCIONES OCULTAS -->
         <div id="pag-indice" class="pagina pagina-activa">
-            <!-- Adiós a Index Materia -->
             <h2>Secciones Ocultas</h2>
             
             <div class="caja-categoria-nueva">
@@ -302,7 +315,7 @@
             </div>
         </div>
 
-        <!-- Cintas Marcadoras con nuevos emojis -->
+        <!-- Cintas Marcadoras -->
         <div class="marcadores">
             <button id="nav-indice" class="marcador-btn activo" onclick="irAPagina('indice')">🕸️ Índice</button>
             <button id="nav-escribir" class="marcador-btn" onclick="irAPagina('escribir')">🩸 Conjurar</button>
@@ -311,11 +324,10 @@
     </div>
 
     <script>
-        // Array de emojis escalofriantes aleatorios para nuevas categorías
         const emojisOscuros = ['🦉', '🥀', '🕷️', '🗡️', '🌘', '🧿', '🐍', '🔥'];
         
-        // Categorías por defecto con sus emojis asignados
-        let categorias = JSON.parse(localStorage.getItem('categorias_cripta_v1')) || [
+        // Base de datos de categorías versionada para evitar conflictos
+        let categorias = JSON.parse(localStorage.getItem('categorias_cripta_v2')) || [
             { nombre: "Pociones", emoji: "🧪" },
             { nombre: "Rituales Lunares", emoji: "🕯️" },
             { nombre: "Maldiciones", emoji: "🪦" }
@@ -324,40 +336,107 @@
         let categoriaFiltradaActual = "Todas";
 
         function inicializarCategorias() {
-            localStorage.setItem('categorias_cripta_v1', JSON.stringify(categorias));
+            localStorage.setItem('categorias_cripta_v2', JSON.stringify(categorias));
             
+            // 1. Selector en formulario de escritura
             const select = document.getElementById('select-categoria');
             select.innerHTML = '';
             categorias.forEach(cat => {
                 select.innerHTML += `<option value="${cat.nombre}">${cat.emoji} ${cat.nombre}</option>`;
             });
 
+            // 2. Render de la lista de secciones en el índice
             const listaIndice = document.getElementById('lista-categorias-indices');
-            // Nuevo emoji para revelar todo el tomo
-            listaIndice.innerHTML = `<div class="cinta-cat" onclick="verCategoria('Todas')">👁️ Revelar Todo el Tomo <span>➔</span></div>`;
+            listaIndice.innerHTML = `
+                <div class="cinta-cat" onclick="verCategoria('Todas')">
+                    <span>👁️ Revelar Todo el Tomo</span>
+                    <div class="controles-cinta"><span>➔</span></div>
+                </div>`;
             
-            categorias.forEach(cat => {
-                listaIndice.innerHTML += `<div class="cinta-cat" onclick="verCategoria('${cat.nombre}')">${cat.emoji} ${cat.nombre} <span>➔</span></div>`;
+            categorias.forEach((cat, index) => {
+                listaIndice.innerHTML += `
+                    <div class="cinta-cat" onclick="verCategoria('${cat.nombre}')">
+                        <span>${cat.emoji} ${cat.nombre}</span>
+                        <div class="controles-cinta">
+                            <!-- El stopPropagation evita que se abra la categoría al tocar el lápiz -->
+                            <span class="btn-editar-cat" onclick="event.stopPropagation(); modificarCategoria(${index})">✏️</span>
+                            <span>➔</span>
+                        </div>
+                    </div>`;
             });
         }
 
+        // --- MANUALLY ADD CATEGORIES ---
         function crearCategoria() {
             const input = document.getElementById('nueva-categoria');
             const nombre = input.value.trim();
             if (!nombre) return;
             
-            // Comprobar si ya existe
             const existe = categorias.some(c => c.nombre.toLowerCase() === nombre.toLowerCase());
             
             if (!existe) {
-                // Seleccionar un emoji aleatorio del array oscuro
                 const emojiAzar = emojisOscuros[Math.floor(Math.random() * emojisOscuros.length)];
                 categorias.push({ nombre: nombre, emoji: emojiAzar });
                 inicializarCategorias();
                 input.value = '';
+            } else {
+                alert("Esa sección ya está consagrada.");
             }
         }
 
+        // --- MANUALLY EDIT CATEGORIES ---
+        function modificarCategoria(index) {
+            const catActual = categorias[index];
+            const nuevoNombre = prompt(`Modificar el umbral "${catActual.nombre}" por:`, catActual.nombre);
+            
+            if (nuevoNombre === null) return; // Cancelado por la usuaria
+            
+            const nombreLimpio = nuevoNombre.trim();
+            if (!nombreLimpio) {
+                alert("El nombre no puede quedar en el vacío.");
+                return;
+            }
+
+            if (nombreLimpio.toLowerCase() === catActual.nombre.toLowerCase()) return;
+
+            // Verificar duplicados
+            const existe = categorias.some(c => c.nombre.toLowerCase() === nombreLimpio.toLowerCase());
+            if (existe) {
+                alert("Ya existe otra sección con ese nombre.");
+                return;
+            }
+
+            // MUDANZA MÁGICA: Actualizar la categoría de los hechizos existentes
+            let hechizos = JSON.parse(localStorage.getItem('hechizos_cripta_v2')) || [];
+            let contadorActualizados = 0;
+            
+            hechizos.forEach(h => {
+                if (h.categoria === catActual.nombre) {
+                    h.categoria = nombreLimpio;
+                    contadorActualizados++;
+                }
+            });
+
+            if (contadorActualizados > 0) {
+                localStorage.setItem('hechizos_cripta_v2', JSON.stringify(hechizos));
+            }
+
+            // Aplicar el cambio final a la lista de categorías
+            const nombreViejo = catActual.nombre;
+            catActual.nombre = nombreLimpio;
+            
+            inicializarCategorias();
+            
+            // Si estábamos leyendo esa categoría, actualizamos la vista
+            if (categoriaFiltradaActual === nombreViejo) {
+                categoriaFiltradaActual = nombreLimpio;
+            }
+            mostrarHechizos();
+            
+            alert(`Mutación completada. Se mudaron ${contadorActualizados} hechizos a "${nombreLimpio}".`);
+        }
+
+        // --- NAVEGACIÓN ---
         function irAPagina(idPagina) {
             document.querySelectorAll('.pagina').forEach(p => p.classList.remove('pagina-activa'));
             document.querySelectorAll('.marcador-btn').forEach(b => b.classList.remove('activo'));
@@ -373,9 +452,10 @@
             irAPagina('lectura');
         }
 
+        // --- SISTEMA DE HECHIZOS ---
         function guardarHechizo() {
             const titulo = document.getElementById('titulo').value;
-            const categoria = document.getElementById('select-categoria').value;
+            const category = document.getElementById('select-categoria').value;
             const descripcion = document.getElementById('descripcion').value;
             const archivoImagen = document.getElementById('imagen').files[0];
 
@@ -387,20 +467,20 @@
             if (archivoImagen) {
                 const lector = new FileReader();
                 lector.onload = function(e) {
-                    guardarEnMemoria(titulo, categoria, descripcion, e.target.result);
+                    guardarEnMemoria(titulo, category, descripcion, e.target.result);
                 };
                 lector.readAsDataURL(archivoImagen);
             } else {
-                guardarEnMemoria(titulo, categoria, descripcion, null);
+                guardarEnMemoria(titulo, category, descripcion, null);
             }
         }
 
-        function guardarEnMemoria(titulo, categoria, descripcion, imagenBase64) {
-            let hechizos = JSON.parse(localStorage.getItem('hechizos_cripta_v1')) || [];
-            hechizos.unshift({ titulo, categoria, descripcion, imagenBase64, fecha: new Date().toLocaleDateString() });
+        function guardarEnMemoria(titulo, category, descripcion, imagenBase64) {
+            let hechizos = JSON.parse(localStorage.getItem('hechizos_cripta_v2')) || [];
+            hechizos.unshift({ titulo, categoria: category, descripcion, imagenBase64, fecha: new Date().toLocaleDateString() });
             
             try {
-                localStorage.setItem('hechizos_cripta_v1', JSON.stringify(hechizos));
+                localStorage.setItem('hechizos_cripta_v2', JSON.stringify(hechizos));
             } catch (e) {
                 alert("La imagen consume demasiada energía mágica (memoria llena).");
                 return;
@@ -409,7 +489,7 @@
             document.getElementById('titulo').value = '';
             document.getElementById('descripcion').value = '';
             document.getElementById('imagen').value = '';
-            categoriaFiltradaActual = categoria;
+            categoriaFiltradaActual = category;
             mostrarHechizos();
             irAPagina('lectura');
         }
@@ -417,7 +497,7 @@
         function mostrarHechizos() {
             const contenedor = document.getElementById('lista-hechizos');
             contenedor.innerHTML = '';
-            let hechizos = JSON.parse(localStorage.getItem('hechizos_cripta_v1')) || [];
+            let hechizos = JSON.parse(localStorage.getItem('hechizos_cripta_v2')) || [];
 
             if (categoriaFiltradaActual !== "Todas") {
                 hechizos = hechizos.filter(h => h.categoria === categoriaFiltradaActual);
@@ -443,6 +523,7 @@
             });
         }
 
+        // Carga Inicial
         inicializarCategorias();
         mostrarHechizos();
     </script>
